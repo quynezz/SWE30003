@@ -4,293 +4,432 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Bell, Heart, ShoppingCart, Search, User, Menu, X } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import logo from "@/assets/logo.jpg";
 
 export function Navbar() {
-    const [isVisible, setIsVisible] = useState(true);
-    const [isScrolled, setIsScrolled] = useState(false);
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const [isSearchFocused, setIsSearchFocused] = useState(false);
-    const sectionRef = useRef(null);
+  const [isVisible, setIsVisible] = useState(true);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState(null); // Track open dropdown
+  const [cartCount, setCartCount] = useState(() => {
+    // Initialize cart count from localStorage
+    const savedCart = localStorage.getItem("cartItems");
+    if (savedCart) {
+      const items = JSON.parse(savedCart);
+      return items.reduce((sum, item) => sum + (item.quantity || 1), 0);
+    }
+    return 0;
+  });
+  const sectionRef = useRef(null);
+  const dropdownRef = useRef(null);
 
-    // Navigation items with dropdown support
-    const navItems = [
-        {
-            name: "Products",
-            link: "/products",
-            dropdown: [
-                { name: "Prescription Drugs", link: "/products/prescription" },
-                { name: "Supplements", link: "/products/supplements" },
-                { name: "Personal Care", link: "/products/personal-care" },
-            ],
-        },
-        { name: "Prescription", link: "/prescription" },
-        { name: "Stores", link: "/branches" },
-    ];
+  // Navigation items with dropdown support
+  const navItems = [
+    {
+      name: "Products",
+      link: "/products",
+      dropdown: [
+        { name: "Prescription Drugs", link: "/products" },
+        { name: "Supplements", link: "/products"},
+        { name: "Personal Care", link: "/products" },
+      ],
+    },
+    { name: "Prescription", link: "/prescription" },
+    { name: "Stores", link: "/branches" },
+  ];
 
-    // Handle scroll for sticky navbar shadow
-    useEffect(() => {
-        const handleScroll = () => {
-            setIsScrolled(window.scrollY > 10);
-        };
-        window.addEventListener("scroll", handleScroll);
-        return () => window.removeEventListener("scroll", handleScroll);
-    }, []);
+  // Handle scroll for sticky navbar shadow
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
-    // Intersection Observer for animations
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                setIsVisible(entry.isIntersecting);
-            },
-            { threshold: 0.1 }
-        );
+  // Intersection Observer for animations
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      { threshold: 0.1 }
+    );
 
-        if (sectionRef.current) {
-            observer.observe(sectionRef.current);
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, []);
+
+  // Listen for storage events to update cart count
+  useEffect(() => {
+    const handleStorageChange = (event) => {
+      if (event.key === "cartItems") {
+        const items = event.newValue ? JSON.parse(event.newValue) : [];
+        setCartCount(items.reduce((sum, item) => sum + (item.quantity || 1), 0));
+      }
+    };
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
+  }, []);
+
+  // Handle clicks outside dropdown to close it
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setOpenDropdown(null);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  // Handle Escape key to close dropdown
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        setOpenDropdown(null);
+        setIsMobileMenuOpen(false);
+      }
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
+  // Toggle dropdown
+  const toggleDropdown = (index) => {
+    setOpenDropdown(openDropdown === index ? null : index);
+  };
+
+  // Toggle mobile menu
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+    setOpenDropdown(null); // Close dropdowns when toggling mobile menu
+  };
+
+  return (
+    <header
+      className={`sticky top-0 z-50 w-full p-3 transition-all duration-300 ${
+        isScrolled
+          ? "bg-white/95 backdrop-blur-md shadow-lg shadow-blue-500/20"
+          : "bg-white/95 backdrop-blur-md"
+      }`}
+      ref={sectionRef}
+    >
+      <div className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
+        {/* Left: Logo */}
+        <div
+          className={`flex items-center space-x-3 ${
+            isVisible ? "animate-fadeInUp" : "opacity-0 translate-y-10"
+          }`}
+        >
+          <Link to="/" className="flex items-center space-x-2 group">
+            <div className="h-12 w-12 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-xl flex items-center justify-center overflow-hidden transition-transform duration-300 group-hover:scale-105">
+              <img
+                src={logo}
+                alt="Long Châu Logo"
+                className="h-full w-full object-cover"
+              />
+            </div>
+            <span className="font-bold text-2xl bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent group-hover:scale-105 transition-transform duration-300">
+              Long Châu
+            </span>
+          </Link>
+        </div>
+
+        {/* Center: Navigation (Desktop) */}
+        <nav
+          className={`hidden md:flex space-x-10 items-center ${
+            isVisible ? "animate-fadeInUp" : "opacity-0 translate-y-12"
+          }`}
+          style={{ animationDelay: "100ms" }}
+        >
+          {navItems.map((item, index) => (
+            <div key={index} className="relative" ref={item.dropdown ? dropdownRef : null}>
+              <Link
+                to={item.link}
+                className="text-base font-medium text-gray-700 hover:text-transparent hover:bg-gradient-to-r hover:from-blue-600 hover:to-cyan-600 hover:bg-clip-text transition-all duration-300 relative after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-0.5 after:bg-gradient-to-r after:from-blue-600 after:to-cyan-600 after:transition-all after:duration-300 hover:after:w-full"
+                onClick={(e) => {
+                  if (item.dropdown) {
+                    e.preventDefault();
+                    toggleDropdown(index);
+                  }
+                }}
+                aria-expanded={openDropdown === index}
+                aria-controls={item.dropdown ? `dropdown-${index}` : undefined}
+              >
+                {item.name}
+                {item.dropdown && (
+                  <svg
+                    className={`ml-1 h-4 w-4 inline transition-transform duration-300 ${
+                      openDropdown === index ? "rotate-180" : ""
+                    }`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                )}
+              </Link>
+              {item.dropdown && (
+                <AnimatePresence>
+                  {openDropdown === index && (
+                    <motion.div
+                      id={`dropdown-${index}`}
+                      className="absolute left-0 top-10 w-64 bg-white rounded-xl shadow-2xl"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 10 }}
+                      transition={{ duration: 0.3, ease: "easeOut" }}
+                    >
+                      {item.dropdown.map((subItem, subIndex) => (
+                        <Link
+                          key={subIndex}
+                          to={subItem.link}
+                          className="block px-4 py-3 text-sm text-gray-700 hover:bg-gradient-to-r hover:from-blue-600 hover:to-cyan-600 hover:text-white rounded-lg transition-all duration-200"
+                          onClick={() => setOpenDropdown(null)}
+                        >
+                          {subItem.name}
+                        </Link>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              )}
+            </div>
+          ))}
+        </nav>
+
+        {/* Right: Search and Icons */}
+        <div
+          className={`flex items-center space-x-4 ${
+            isVisible ? "animate-fadeInUp" : "opacity-0 translate-y-10"
+          }`}
+          style={{ animationDelay: "200ms" }}
+        >
+          {/* Search */}
+          <div
+            className={`relative w-48 sm:w-64 lg:w-72 transition-all duration-300 ${
+              isSearchFocused ? "scale-105 shadow-lg shadow-blue-500/20" : ""
+            }`}
+          >
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+            <Input
+              placeholder="Tìm kiếm thuốc, thực phẩm chức năng..."
+              className={`pl-10 pr-4 bg-white/95 border-none focus:ring-2 focus:ring-blue-500 rounded-full text-sm placeholder-gray-400 transition-all duration-300 ${
+                isSearchFocused ? "shadow-md shadow-blue-500/20" : ""
+              }`}
+              onFocus={() => setIsSearchFocused(true)}
+              onBlur={() => setIsSearchFocused(false)}
+              aria-label="Tìm kiếm thuốc hoặc thực phẩm chức năng"
+            />
+          </div>
+
+          {/* Icons */}
+          <Button
+            variant="ghost"
+            size="icon"
+            className="relative hover:bg-blue-50 rounded-full transition-transform duration-200 hover:scale-110"
+            aria-label="Thông báo"
+          >
+            <Bell className="h-6 w-6 text-gray-600 group-hover:text-blue-600 transition-colors" />
+            <Badge className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs bg-red-500 animate-pulse">
+              3
+            </Badge>
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="hover:bg-blue-50 rounded-full transition-transform duration-200 hover:scale-110"
+            aria-label="Danh sách yêu thích"
+          >
+            <Heart className="h-6 w-6 text-gray-600 group-hover:text-red-500 transition-colors" />
+          </Button>
+          <Link to="/cart">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="relative hover:bg-blue-50 rounded-full transition-transform duration-200 hover:scale-110"
+              aria-label={`Giỏ hàng (${cartCount} sản phẩm)`}
+            >
+              <ShoppingCart className="h-6 w-6 text-gray-600 group-hover:text-blue-600 transition-colors" />
+              {cartCount > 0 && (
+                <Badge className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs bg-green-500 animate-pulse">
+                  {cartCount}
+                </Badge>
+              )}
+            </Button>
+          </Link>
+          <Link to="/login">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="hover:bg-blue-50 rounded-full transition-transform duration-200 hover:scale-110"
+              aria-label="Tài khoản người dùng"
+            >
+              <User className="h-6 w-6 text-gray-600 group-hover:text-blue-600 transition-colors" />
+            </Button>
+          </Link>
+
+          {/* Mobile Menu Toggle */}
+          <Button
+            variant="ghost"
+            size="icon"
+            className="md:hidden hover:bg-blue-50 rounded-full transition-transform duration-200 hover:scale-110"
+            onClick={toggleMobileMenu}
+            aria-label={isMobileMenuOpen ? "Đóng menu" : "Mở menu"}
+          >
+            {isMobileMenuOpen ? (
+              <X className="h-7 w-7 text-gray-600" />
+            ) : (
+              <Menu className="h-7 w-7 text-gray-600" />
+            )}
+          </Button>
+        </div>
+      </div>
+
+      {/* Mobile Menu */}
+      {isMobileMenuOpen && (
+        <div
+          className={`md:hidden bg-white/95 backdrop-blur-md shadow-xl transition-all duration-500 ease-in-out ${
+            isVisible ? "animate-slideInDown" : "opacity-0 -translate-y-10"
+          }`}
+        >
+          <nav className="flex flex-col p-6 space-y-6">
+            {navItems.map((item, index) => (
+              <div key={index} className="border-b border-gray-100 pb-4">
+                <Link
+                  to={item.link}
+                  className="text-base font-medium text-gray-700 hover:text-blue-600 transition-colors py-2 block"
+                  onClick={(e) => {
+                    if (item.dropdown) {
+                      e.preventDefault();
+                      toggleDropdown(index);
+                    } else {
+                      setIsMobileMenuOpen(false);
+                    }
+                  }}
+                  aria-expanded={openDropdown === index}
+                  aria-controls={item.dropdown ? `mobile-dropdown-${index}` : undefined}
+                >
+                  {item.name}
+                  {item.dropdown && (
+                    <svg
+                      className={`ml-1 h-4 w-4 inline transition-transform duration-300 ${
+                        openDropdown === index ? "rotate-180" : ""
+                      }`}
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M19 9l-7 7-7-7"
+                      />
+                    </svg>
+                  )}
+                </Link>
+                {item.dropdown && openDropdown === index && (
+                  <motion.div
+                    id={`mobile-dropdown-${index}`}
+                    className="ml-4 space-y-3 mt-3"
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.3, ease: "easeOut" }}
+                  >
+                    {item.dropdown.map((subItem, subIndex) => (
+                      <Link
+                        key={subIndex}
+                        to={subItem.link}
+                        className="block text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg py-2 px-3 transition-all duration-200"
+                        onClick={() => {
+                          setIsMobileMenuOpen(false);
+                          setOpenDropdown(null);
+                        }}
+                      >
+                        {subItem.name}
+                      </Link>
+                    ))}
+                  </motion.div>
+                )}
+              </div>
+            ))}
+          </nav>
+        </div>
+      )}
+
+      <style>{`
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
         }
 
-        return () => {
-            if (sectionRef.current) {
-                observer.unobserve(sectionRef.current);
-            }
-        };
-    }, []);
+        @keyframes slideInDown {
+          from {
+            opacity: 0;
+            transform: translateY(-20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
 
-    // Toggle mobile menu
-    const toggleMobileMenu = () => {
-        setIsMobileMenuOpen(!isMobileMenuOpen);
-    };
+        .animate-fadeInUp {
+          animation: fadeInUp 0.6s ease-out forwards;
+        }
 
-    return (
-        <header
-            className={`sticky top-0 z-50 w-full p-2 transition-all duration-300 ${
-                isScrolled
-                    ? "bg-background/95 backdrop-blur shadow-lg shadow-blue-500/20"
-                    : "bg-background/95 backdrop-blur"
-            }`}
-            ref={sectionRef}
-        >
-            <div className="container mx-auto flex h-16 items-center justify-between px-4">
-                {/* Left: Logo */}
-                <div
-                    className={`flex items-center space-x-4 ${
-                        isVisible ? "animate-fadeInUp" : "opacity-0 translate-y-10"
-                    }`}
-                >
-                    <Link to="/" className="flex items-center space-x-2">
-                        <div className="h-10 w-10 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-lg flex items-center justify-center overflow-hidden">
-                            <img
-                                src={logo}
-                                alt="Long Chau Logo"
-                                className="h-full w-full object-cover"
-                            />
-                        </div>
-                        <span className="font-bold text-2xl bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
-                            Long Chau
-                        </span>
-                    </Link>
-                </div>
+        .animate-slideInDown {
+          animation: slideInDown 0.5s ease-out forwards;
+        }
 
-                {/* Center: Navigation (Desktop) */}
-                <nav
-                    className={`hidden md:flex space-x-8 items-center ${
-                        isVisible ? "animate-fadeInUp" : "opacity-0 translate-y-12"
-                    }`}
-                    style={{ animationDelay: "100ms" }}
-                >
-                    {navItems.map((item, index) => (
-                        <div key={index} className="relative group">
-                            <Link
-                                to={item.link}
-                                className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors flex items-center group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-cyan-600 group-hover:bg-clip-text group-hover:text-transparent"
-                            >
-                                {item.name}
-                                {item.dropdown && (
-                                    <svg
-                                        className="ml-1 h-4 w-4"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth="2"
-                                            d="M19 9l-7 7-7-7"
-                                        />
-                                    </svg>
-                                )}
-                            </Link>
-                            {item.dropdown && (
-                                <div className="absolute left-0 mt-2 w-48 bg-white rounded-lg shadow-lg opacity-0 group-hover:opacity-100 group-hover:translate-y-0 translate-y-2 transition-all duration-300 pointer-events-none group-hover:pointer-events-auto">
-                                    {item.dropdown.map((subItem, subIndex) => (
-                                        <Link
-                                            key={subIndex}
-                                            to={subItem.link}
-                                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gradient-to-r hover:from-blue-600 hover:to-cyan-600 hover:text-white rounded-lg"
-                                        >
-                                            {subItem.name}
-                                        </Link>
-                                    ))}
-                                </div>
-                            )}
-                        </div>
-                    ))}
-                </nav>
+        .animate-pulse {
+          animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
 
-                {/* Right: Search and Icons */}
-                <div
-                    className={`flex items-center space-x-4 ${
-                        isVisible ? "animate-fadeInUp" : "opacity-0 translate-y-10"
-                    }`}
-                    style={{ animationDelay: "200ms" }}
-                >
-                    {/* Search */}
-                    <div
-                        className={`relative w-[200px] sm:w-[300px] transition-all duration-300 ${
-                            isSearchFocused ? "scale-105" : ""
-                        }`}
-                    >
-                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-                        <Input
-                            placeholder="Search medicines, supplements..."
-                            className={`pl-10 pr-4 bg-white/95 border-0 focus:ring-2 focus:ring-blue-400 rounded-full transition-all duration-300 ${
-                                isSearchFocused ? "shadow-md shadow-blue-500/20" : ""
-                            }`}
-                            onFocus={() => setIsSearchFocused(true)}
-                            onBlur={() => setIsSearchFocused(false)}
-                        />
-                    </div>
+        @keyframes pulse {
+          0%, 100% {
+            opacity: 1;
+          }
+          50% {
+            opacity: 0.7;
+          }
+        }
 
-                    {/* Icons */}
-                    <Button
-                        variant="ghost"
-                        size="icon"
-                        className="relative hover:bg-blue-100 rounded-full"
-                    >
-                        <Bell className="h-5 w-5 text-gray-600 group-hover:text-blue-600 transition-colors" />
-                        <Badge className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs bg-red-500">
-                            3
-                        </Badge>
-                    </Button>
-                    <Button
-                        variant="ghost"
-                        size="icon"
-                        className="hover:bg-blue-100 rounded-full"
-                    >
-                        <Heart className="h-5 w-5 text-gray-600 group-hover:text-red-500 transition-colors" />
-                    </Button>
-                    <Link to="/cart">
-                        <Button
-                            variant="ghost"
-                            size="icon"
-                            className="relative hover:bg-blue-100 rounded-full"
-                        >
-                            <ShoppingCart className="h-5 w-5 text-gray-600 group-hover:text-blue-600 transition-colors" />
-                            <Badge className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs bg-green-500">
-                                2
-                            </Badge>
-                        </Button>
-                    </Link>
-                    <Link to="/login">
-                        <Button
-                            variant="ghost"
-                            size="icon"
-                            className="hover:bg-blue-100 rounded-full"
-                        >
-                            <User className="h-5 w-5 text-gray-600 group-hover:text-blue-600 transition-colors" />
-                        </Button>
-                    </Link>
+        .container {
+          max-width: 1280px;
+        }
 
-                    {/* Mobile Menu Toggle */}
-                    <Button
-                        variant="ghost"
-                        size="icon"
-                        className="md:hidden hover:bg-blue-100 rounded-full"
-                        onClick={toggleMobileMenu}
-                    >
-                        {isMobileMenuOpen ? (
-                            <X className="h-6 w-6 text-gray-600" />
-                        ) : (
-                            <Menu className="h-6 w-6 text-gray-600" />
-                        )}
-                    </Button>
-                </div>
-            </div>
-
-            {/* Mobile Menu */}
-            {isMobileMenuOpen && (
-                <div
-                    className={`md:hidden bg-white/95 backdrop-blur-sm shadow-lg transition-all duration-300 ${
-                        isVisible ? "animate-fadeInDown" : "opacity-0 -translate-y-10"
-                    }`}
-                >
-                    <nav className="flex flex-col p-4 space-y-4">
-                        {navItems.map((item, index) => (
-                            <div key={index}>
-                                <Link
-                                    to={item.link}
-                                    className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors flex items-center py-2"
-                                    onClick={() => setIsMobileMenuOpen(false)}
-                                >
-                                    {item.name}
-                                </Link>
-                                {item.dropdown && (
-                                    <div className="ml-4 space-y-2">
-                                        {item.dropdown.map((subItem, subIndex) => (
-                                            <Link
-                                                key={subIndex}
-                                                to={subItem.link}
-                                                className="block text-sm text-gray-600 hover:text-blue-600 transition-colors py-1"
-                                                onClick={() => setIsMobileMenuOpen(false)}
-                                            >
-                                                {subItem.name}
-                                            </Link>
-                                        ))}
-                                    </div>
-                                )}
-                            </div>
-                        ))}
-                    </nav>
-                </div>
-            )}
-
-            <style>{`
-                @keyframes fadeInUp {
-                    from {
-                        opacity: 0;
-                        transform: translateY(10px);
-                    }
-                    to {
-                        opacity: 1;
-                        transform: translateY(0);
-                    }
-                }
-
-                @keyframes fadeInDown {
-                    from {
-                        opacity: 0;
-                        transform: translateY(-10px);
-                    }
-                    to {
-                        opacity: 1;
-                        transform: translateY(0);
-                    }
-                }
-
-                .animate-fadeInUp {
-                    animation: fadeInUp 0.6s ease-out forwards;
-                }
-
-                .animate-fadeInDown {
-                    animation: fadeInDown 0.6s ease-out forwards;
-                }
-
-                .container {
-                    max-width: 1200px;
-                }
-            `}</style>
-        </header>
-    );
+        @media (max-width: 640px) {
+          .container {
+            padding-left: 1rem;
+            padding-right: 1rem;
+          }
+        }
+      `}</style>
+    </header>
+  );
 }

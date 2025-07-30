@@ -1,0 +1,411 @@
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Trash2, ShoppingCart, Plus, Minus, Search } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect, useRef } from "react";
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { featuredProducts } from "@/data/featuredProducts";
+
+export function CartPage() {
+    const navigate = useNavigate();
+    const sectionRef = useRef(null);
+    const [isVisible, setIsVisible] = useState(false);
+    const [searchQuery, setSearchQuery] = useState("");
+    const [cartItems, setCartItems] = useState([
+        {
+            id: featuredProducts[0].id,
+            name: featuredProducts[0].name,
+            price: parseFloat(featuredProducts[0].price.replace(".", "")),
+            quantity: 2,
+            image: featuredProducts[0].image,
+            description: featuredProducts[0].description,
+        },
+        {
+            id: featuredProducts[1]?.id || 2,
+            name: featuredProducts[1]?.name || "Vitamin C 1000mg",
+            price: featuredProducts[1]?.price ? parseFloat(featuredProducts[1].price.replace(".", "")) : 75000,
+            quantity: 1,
+            image: featuredProducts[1]?.image || "https://cdn.nhathuoclongchau.com.vn/unsafe/768x0/filters:quality(90)/https://cms-prod.s3-sgn09.fptcloud.com/redisolv_5ffd8a1576.png",
+            description: featuredProducts[1]?.description || "Hỗ trợ tăng cường hệ miễn dịch.",
+        },
+        {
+            id: featuredProducts[2]?.id || 3,
+            name: featuredProducts[2]?.name || "Band-Aid Pack",
+            price: featuredProducts[2]?.price ? parseFloat(featuredProducts[2].price.replace(".", "")) : 30000,
+            quantity: 3,
+            image: featuredProducts[2]?.image || "https://cdn.nhathuoclongchau.com.vn/unsafe/768x0/filters:quality(90)/https://cms-prod.s3-sgn09.fptcloud.com/DSC_00276_63c1cb2f15.png",
+            description: featuredProducts[2]?.description || "Băng cá nhân tiện lợi cho vết thương nhỏ.",
+        },
+    ]);
+
+    // Filter cart items based on search query
+    const filteredCartItems = cartItems.filter(
+        (item) => item.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    // Calculate totals
+    const subtotal = filteredCartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    const formattedSubtotal = subtotal.toString().concat(".000đ");
+    const shippingCost = filteredCartItems.length > 0 ? 30000 : 0;
+    const formattedShippingCost = shippingCost.toString().concat(".000đ");
+    const total = subtotal + shippingCost;
+    const formattedTotal = total.toString().concat(".000đ");
+
+    // Handle quantity changes
+    const updateQuantity = (id, delta) => {
+        setCartItems((prev) =>
+            prev.map((item) =>
+                item.id === id
+                    ? { ...item, quantity: Math.max(1, item.quantity + delta) }
+                    : item
+            )
+        );
+    };
+
+    // Handle item removal
+    const removeItem = (id) => {
+        setCartItems((prev) => prev.filter((item) => item.id !== id));
+    };
+
+    // Intersection Observer for animations
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                setIsVisible(entry.isIntersecting);
+            },
+            { threshold: 0.2 }
+        );
+
+        if (sectionRef.current) {
+            observer.observe(sectionRef.current);
+        }
+
+        return () => {
+            if (sectionRef.current) {
+                observer.unobserve(sectionRef.current);
+            }
+        };
+    }, []);
+
+    // Animation variants
+    const containerVariants = {
+        initial: { opacity: 0, y: 20 },
+        animate: {
+            opacity: 1,
+            y: 0,
+            transition: {
+                duration: 0.5,
+                staggerChildren: 0.1,
+            },
+        },
+    };
+
+    const itemVariants = {
+        initial: { opacity: 0, y: 20 },
+        animate: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+    };
+
+    return (
+        <motion.div
+            className="h-screen bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-600 relative overflow-x-hidden overflow-y-hidden flex flex-col"
+            variants={containerVariants}
+            initial="initial"
+            animate="animate"
+            ref={sectionRef}
+        >
+            {/* Background Pattern */}
+            <div className="absolute inset-0 opacity-10 overflow-x-hidden overflow-y-hidden">
+                <div
+                    className="absolute inset-0"
+                    style={{
+                        backgroundImage: `radial-gradient(circle at 20% 30%, #3b82f6 2px, transparent 2px),
+                                        radial-gradient(circle at 80% 70%, #06b6d4 2px, transparent 2px)`,
+                        backgroundSize: "50px 50px",
+                    }}
+                ></div>
+            </div>
+
+            {/* Header */}
+            <header className="bg-white/95 backdrop-blur-sm border-b sticky top-0 z-10 shadow-sm">
+                <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
+                    <div className="flex items-center justify-between">
+                        <Link
+                            to="/"
+                            className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent"
+                        >
+                            Long Châu
+                        </Link>
+                        <Button variant="outline" size="icon" className="hover:bg-blue-50">
+                            <ShoppingCart className="h-4 w-4" aria-label="Giỏ hàng" />
+                        </Button>
+                    </div>
+                </div>
+            </header>
+
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 flex flex-col overflow-x-hidden overflow-y-hidden">
+                {/* Progress Indicator */}
+                <motion.div
+                    variants={itemVariants}
+                    className="mb-6 flex justify-center space-x-4"
+                >
+                    <div className="flex items-center">
+                        <div className="h-8 w-8 rounded-full bg-blue-600 text-white flex items-center justify-center">1</div>
+                        <span className="ml-2 text-sm font-medium text-white">Giỏ hàng</span>
+                    </div>
+                    <div className="flex items-center">
+                        <div className="h-8 w-8 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center">2</div>
+                        <span className="ml-2 text-sm font-medium text-gray-200">Thanh toán</span>
+                    </div>
+                    <div className="flex items-center">
+                        <div className="h-8 w-8 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center">3</div>
+                        <span className="ml-2 text-sm font-medium text-gray-200">Hoàn tất</span>
+                    </div>
+                </motion.div>
+
+                <motion.div variants={itemVariants} className="text-center mb-6">
+                    <h1 className="text-3xl lg:text-4xl font-bold text-white mb-2">
+                        Giỏ Hàng{" "}
+                        <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+                            Của Bạn
+                        </span>
+                    </h1>
+                    <p className="text-base text-gray-200 max-w-2xl mx-auto">
+                        Xem lại các sản phẩm trong giỏ hàng và tiến hành thanh toán
+                    </p>
+                </motion.div>
+
+                {/* Search Bar */}
+                <motion.div variants={itemVariants} className="max-w-md mx-auto mb-6">
+                    <div className="relative">
+                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+                        <Input
+                            placeholder="Tìm sản phẩm trong giỏ"
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            className="pl-10 pr-4 bg-white border-gray-300 focus:ring-2 focus:ring-blue-400 rounded-lg w-full"
+                            aria-label="Tìm kiếm sản phẩm trong giỏ hàng"
+                        />
+                    </div>
+                </motion.div>
+
+                {filteredCartItems.length === 0 ? (
+                    <motion.div
+                        variants={itemVariants}
+                        className="flex-1 flex items-center justify-center"
+                    >
+                        <Card className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-lg max-w-md w-full">
+                            <CardContent className="p-6 text-center">
+                                <ShoppingCart className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                                <p className="text-gray-600 mb-4">
+                                    {searchQuery ? "Không tìm thấy sản phẩm phù hợp" : "Giỏ hàng của bạn đang trống"}
+                                </p>
+                                <Button
+                                    asChild
+                                    className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white hover:opacity-90 transition-all duration-300 transform hover:scale-105"
+                                >
+                                    <Link to="/">Tiếp tục mua sắm</Link>
+                                </Button>
+                            </CardContent>
+                        </Card>
+                    </motion.div>
+                ) : (
+                    <div className="grid lg:grid-cols-3 gap-6 flex-1 overflow-x-hidden">
+                        {/* Cart Items */}
+                        <motion.div
+                            variants={containerVariants}
+                            className="lg:col-span-2 space-y-4 max-h-[calc(100vh-300px)] overflow-x-hidden overflow-y-auto"
+                        >
+                            <div className="flex items-center justify-between mb-4">
+                                <h2 className="text-lg font-semibold text-white">Sản Phẩm Trong Giỏ</h2>
+                                <span className="text-gray-200">{filteredCartItems.length} sản phẩm</span>
+                            </div>
+                            <div className="space-y-4">
+                                {filteredCartItems.map((item, index) => (
+                                    <motion.div
+                                        key={item.id}
+                                        variants={itemVariants}
+                                        initial="initial"
+                                        animate="animate"
+                                        transition={{ delay: index * 0.1 }}
+                                    >
+                                        <Card className="group bg-white/95 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
+                                            <CardContent className="p-4 relative">
+                                                <div
+                                                    className="absolute inset-0 bg-gradient-to-br from-blue-500 to-cyan-500 opacity-0 group-hover:opacity-10 transition-opacity duration-300"
+                                                ></div>
+                                                <div className="flex items-center space-x-4 relative">
+                                                    <img
+                                                        src={item.image}
+                                                        alt={item.name}
+                                                        className="w-16 h-16 object-contain rounded-md"
+                                                    />
+                                                    <div className="flex-1 group-hover:cursor-pointer">
+                                                        <p className="font-semibold text-gray-900 group-hover:text-blue-600 text-sm">{item.name}</p>
+                                                        <p className="text-xs text-gray-600">{item.price.toString().concat(".000đ")} / đơn vị</p>
+                                                        <div className="absolute hidden group-hover:block bg-white rounded-lg shadow-md p-2 mt-2 text-xs text-gray-600 max-w-xs z-10 line-clamp-3">
+                                                            {item.description}
+                                                        </div>
+                                                    </div>
+                                                    <div className="flex items-center space-x-2">
+                                                        <Button
+                                                            variant="outline"
+                                                            size="icon"
+                                                            className="h-7 w-7 group-hover:bg-blue-100"
+                                                            onClick={() => updateQuantity(item.id, -1)}
+                                                            aria-label={`Giảm số lượng ${item.name}`}
+                                                        >
+                                                            <Minus className="h-3 w-3" />
+                                                        </Button>
+                                                        <Input
+                                                            type="number"
+                                                            value={item.quantity}
+                                                            onChange={(e) =>
+                                                                setCartItems((prev) =>
+                                                                    prev.map((i) =>
+                                                                        i.id === item.id
+                                                                            ? { ...i, quantity: Math.max(1, parseInt(e.target.value) || 1) }
+                                                                            : i
+                                                                    )
+                                                                )
+                                                            }
+                                                            className="w-12 text-center text-sm"
+                                                            min="1"
+                                                            aria-label={`Số lượng ${item.name}`}
+                                                        />
+                                                        <Button
+                                                            variant="outline"
+                                                            size="icon"
+                                                            className="h-7 w-7 group-hover:bg-blue-100"
+                                                            onClick={() => updateQuantity(item.id, 1)}
+                                                            aria-label={`Tăng số lượng ${item.name}`}
+                                                        >
+                                                            <Plus className="h-3 w-3" />
+                                                        </Button>
+                                                    </div>
+                                                    <Button
+                                                        variant="ghost"
+                                                        size="icon"
+                                                        className="text-red-500 hover:text-red-600 hover:bg-red-100"
+                                                        onClick={() => removeItem(item.id)}
+                                                        aria-label={`Xóa ${item.name} khỏi giỏ hàng`}
+                                                    >
+                                                        <Trash2 className="h-4 w-4" />
+                                                    </Button>
+                                                </div>
+                                                <div
+                                                    className="absolute bottom-0 left-6 right-6 h-1 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"
+                                                ></div>
+                                            </CardContent>
+                                        </Card>
+                                    </motion.div>
+                                ))}
+                            </div>
+                        </motion.div>
+
+                        {/* Order Summary */}
+                        <motion.div
+                            variants={itemVariants}
+                            className="lg:col-span-1"
+                        >
+                            <Card className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-lg overflow-hidden">
+                                <CardContent className="p-4">
+                                    <h2 className="text-lg font-bold text-gray-900 mb-3">Tóm Tắt Đơn Hàng</h2>
+                                    <div className="space-y-2">
+                                        <div className="flex justify-between text-sm">
+                                            <span>Tạm tính:</span>
+                                            <span>{formattedSubtotal}</span>
+                                        </div>
+                                        <div className="flex justify-between text-sm">
+                                            <span>Phí vận chuyển:</span>
+                                            <span>{formattedShippingCost}</span>
+                                        </div>
+                                        <div className="flex justify-between text-sm font-bold mt-2">
+                                            <span>Tổng cộng:</span>
+                                            <span>{formattedTotal}</span>
+                                        </div>
+                                    </div>
+                                    <Button
+                                        className="w-full mt-3 bg-gradient-to-r from-blue-600 to-cyan-600 hover:opacity-90 text-white transition-all duration-300 transform hover:scale-105"
+                                        onClick={() => navigate("/checkout")}
+                                        disabled={filteredCartItems.length === 0}
+                                        aria-label="Tiến hành thanh toán"
+                                    >
+                                        Tiến hành thanh toán
+                                    </Button>
+                                    <Button
+                                        variant="outline"
+                                        className="w-full mt-2 border-blue-400 text-blue-600 hover:bg-blue-100"
+                                        asChild
+                                    >
+                                        <Link to="/">Tiếp tục mua sắm</Link>
+                                    </Button>
+                                </CardContent>
+                            </Card>
+                        </motion.div>
+                    </div>
+                )}
+            </div>
+
+            {/* Floating Elements */}
+            <div
+                className={`absolute -top-2 -right-2 w-8 h-8 bg-white rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${isVisible ? 'animate-pulse' : ''}`}
+            ></div>
+            <div
+                className={`absolute -bottom-2 -left-2 w-6 h-6 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${isVisible ? 'animate-pulse' : ''}`}
+            ></div>
+
+            <style>{`
+                @keyframes fadeInUp {
+                    from {
+                        opacity: 0;
+                        transform: translateY(40px);
+                    }
+                    to {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
+
+                .animate-fadeInUp {
+                    animation: fadeInUp 0.8s ease-out forwards;
+                }
+
+                .container {
+                    max-width: 1280px;
+                    width: 100%;
+                    overflow-x: hidden;
+                    overflow-y: hidden;
+                }
+
+                html, body {
+                    overflow-y: hidden;
+                    height: 100%;
+                }
+
+                @media (max-width: 640px) {
+                    .container {
+                        padding-left: 1rem;
+                        padding-right: 1rem;
+                    }
+                    h1 {
+                        font-size: 1.75rem;
+                    }
+                    .lg\\:grid-cols-3 {
+                        grid-template-columns: 1fr;
+                    }
+                    .lg\\:col-span-2 {
+                        grid-column: 1 / -1;
+                    }
+                    .lg\\:col-span-1 {
+                        grid-column: 1 / -1;
+                    }
+                    .max-h-\\[calc\\(100vh-300px\\)\\] {
+                        max-height: calc(100vh - 340px);
+                    }
+                }
+            `}</style>
+        </motion.div>
+    );
+}

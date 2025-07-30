@@ -7,16 +7,14 @@ import { UploadPrescriptionPage } from "@/page/upload_prescription";
 import { StoreLocationPage } from "@/page/store_location";
 import { ProductDetailPage } from "@/page/product-page";
 import { Track } from "@/page/track";
-
-// import { StaffDashboard } from "@/components/staff_dashboard";
-// import { AdminDashboard } from "@/components/admin_dashboard";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { CartPage } from "@/page/cart";
+import { Routes, Route } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
+import { OrderSuccessPage } from "@/page/order_success";
 
 function App() {
   return (
     <AnimatePresence mode="wait">
-        // ROUTES
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />
@@ -27,7 +25,10 @@ function App() {
         <Route path="/prescription" element={<UploadPrescriptionPage />} />
         <Route path="/branches" element={<StoreLocationPage />} />
         <Route path="/product/:id" element={<ProductDetailPage />} />
+        <Route path="/product/:id" element={<ProductDetailPage />} />
         <Route path="/track" element={<Track/>} />
+        <Route path="/cart" element={<CartPage/>} />
+        <Route path="/order-success" element={<OrderSuccessPage/>} />
 
         {/* <Route path="/staff-dashboard" element={<StaffDashboard />} />
         <Route path="/admin-dashboard" element={<AdminDashboard />} /> */}
