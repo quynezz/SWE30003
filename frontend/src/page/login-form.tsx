@@ -67,7 +67,7 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"form">)
                 life: 3000,
             });
             setTimeout(() => {
-                window.location.href = '/home';
+                window.location.href = '/products';
             }, 3000);
         } else {
             toast.current?.show({
