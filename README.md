@@ -49,7 +49,7 @@ To set up the project locally, follow these steps:
 1. **Clone the repository**:
 
    ```bash
-   git clone https://github.com/your-username/long-chau-pharmacy.git
+   git clone https://github.com/quynezz/SWE30003.git
    cd long-chau-pharmacy
    ```
 
@@ -65,8 +65,10 @@ To set up the project locally, follow these steps:
    npm run dev
    ```
 
-4. **Open the application**: Open your browser and navigate to `http://localhost:5173` (or the port specified by Vite).
+4. **Open the application**: Open your browser and navigate to `http://localhost:5173` (or the port specified by Vite). Or you can click the link below to view the live demo.
 
+
+[Live Demo](longchaupmc.vercel.app/)
 ---
 
 ## 🚀 Usage
