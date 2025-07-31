@@ -30,7 +30,7 @@ export function Footer() {
             </p>
         <div className="flex items-center space-x-4 mb-4">
         <Phone className="h-5 w-5 text-blue-400" />
-        <span>1800 6928 (Free hotline)</span>
+        <span>1800 6928 </span>
         </div>
         <div className="flex items-center space-x-4">
         <Globe className="h-5 w-5 text-blue-400" />
@@ -154,23 +154,7 @@ export function Footer() {
         Privacy Policy
         </Link>
         </li>
-        <li>
-        <Link
-        to="/terms"
-        className="hover:text-white transition-colors"
-        >
-        Terms of Service
-        </Link>
-        </li>
-        <li>
-        <Link
-        to="/careers"
-        className="hover:text-white transition-colors"
-        >
-        Careers
-        </Link>
-        </li>
-        </ul>
+                </ul>
         </div>
         </div>
         <div className="border-t border-gray-800 mt-12 pt-8">

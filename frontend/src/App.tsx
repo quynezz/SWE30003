@@ -12,6 +12,7 @@ import { Routes, Route } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import { OrderSuccessPage } from "@/page/order_success";
 import { NotificationPage } from "@/page/notification";
+import { ArticlePage } from "@/page/ariticles";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
         <Route path="/cart" element={<CartPage/>} />
         <Route path="/order-success" element={<OrderSuccessPage/>} />
         <Route path="/notification" element={<NotificationPage />} />
+        <Route path="/articles/:articleId" element={<ArticlePage />} />
 
         {/* Uncomment the following lines if you have staff or admin dashboards */}
 

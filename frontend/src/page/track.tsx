@@ -1,24 +1,23 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
-import { Package, Truck, CheckCircle, Clock, MapPin, Search } from "lucide-react";
+import { CheckCircle, Clock, MapPin, Search } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { cn } from "@/lib/utils";
 import { Navbar } from "@/components/navbar";
 import { TrackingData } from "@/data/mockTrackingData";
 
 
 
 export function Track() {
-    const [orderId, setOrderId] = useState("");
-    const [trackingStatus, setTrackingStatus] = useState(null);
+    const [orderId, setOrderId] = useState<string>("");
+    const [trackingStatus, setTrackingStatus] = useState<any>(null);
     const [error, setError] = useState("");
     const [isVisible, setIsVisible] = useState(false);
     const sectionRef = useRef(null);
 
     // Mock tracking data
-    const mockTrackingData = TrackingData;
+    const mockTrackingData: any = TrackingData;
 
     // Handle tracking search
     const handleTrackOrder = () => {
@@ -164,7 +163,7 @@ export function Track() {
                                     Trạng Thái Đơn Hàng #{trackingStatus.orderId}
                                 </motion.h2>
                                 <div className="space-y-6">
-                                    {trackingStatus.steps.map((step, index) => (
+                                    {trackingStatus.steps.map((step: any, index: number) => (
                                         <motion.div
                                             key={index}
                                             variants={itemVariants}

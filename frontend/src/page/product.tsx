@@ -209,10 +209,10 @@ export function ProductPage() {
                 />
               </div>
               <Link to="/cart" className="relative">
-                <Button variant="outline" size="icon" className="hover:bg-blue-50">
-                  <ShoppingCart className="h-4 w-4" />
+                <Button variant="outline" size="icon" className="hover:bg-blue-50 cursor-pointer">
+                  <ShoppingCart className="h-4 w-4 cursor-pointer" />
                   {cartCount > 0 && (
-                    <Badge className="absolute -top-2 -right-2 bg-green-500 text-white h-4 w-4 flex items-center justify-center rounded-full animate-pulse text-[10px]">
+                    <Badge className="absolute -top-2 -right-2 bg-red-600 text-white h-4 w-4 flex items-center justify-center cursor-pointer rounded-full animate-pulse text-[10px]">
                       {cartCount}
                     </Badge>
                   )}

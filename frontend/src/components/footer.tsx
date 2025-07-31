@@ -154,9 +154,9 @@ export function Footer() {
         {[
             { name: "Upload Prescription", link: "/prescription" },
             { name: "Find Store", link: "/branches" },
-            { name: "Loyalty Program", link: "/loyalty" },
-            { name: "Track Order", link: "/orders" },
-            { name: "Health Consultation", link: "/consultation" },
+            { name: "Loyalty Program", link: "/" },
+            { name: "Track Order", link: "/track" },
+            { name: "Health Consultation", link: "/" },
         ].map((item, index) => (
             <li key={index}>
             <Link
@@ -176,11 +176,11 @@ export function Footer() {
         <h3 className="font-semibold text-lg mb-6">Support</h3>
         <ul className="space-y-3 text-gray-300">
         {[
-            { name: "Contact Us", link: "/contact" },
-            { name: "FAQ", link: "/faq" },
-            { name: "Privacy Policy", link: "/policy" },
-            { name: "Terms of Service", link: "/terms" },
-            { name: "Careers", link: "/careers" },
+            { name: "Contact Us", link: "/" },
+            { name: "FAQ", link: "/" },
+            { name: "Privacy Policy", link: "/" },
+            { name: "Terms of Service", link: "/" },
+            { name: "Careers", link: "/" },
         ].map((item, index) => (
             <li key={index}>
             <Link

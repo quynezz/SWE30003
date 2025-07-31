@@ -30,7 +30,7 @@ export function Services() {
                 "Health screenings",
             ],
             gradient: "from-green-200 to-emerald-200",
-            action: { text: "Book Consultation", link: "/consultation" },
+            action: { text: "Book Consultation", link: "/" },
         },
         {
             icon: <Truck className="h-8 w-8 text-purple-600" />,
@@ -54,7 +54,7 @@ export function Services() {
                 "Expiry date monitoring",
             ],
             gradient: "from-red-200 to-orange-200",
-            action: { text: "Learn More", link: "/quality" },
+            action: { text: "Learn More", link: "/" },
         },
     ];
 

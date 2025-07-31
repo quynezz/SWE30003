@@ -115,10 +115,10 @@ export function CartPage() {
           </div>
           <div className="relative">
             <Link to="/cart">
-              <Button variant="outline" size="icon" className="hover:bg-blue-50">
-                <ShoppingCart className="h-5 w-5" />
+              <Button variant="outline" size="icon" className="hover:bg-blue-50 cursor-pointer">
+                <ShoppingCart className="h-5 w-5 cursor-pointer" />
                 {cartCount > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] rounded-full h-4 w-4 flex items-center justify-center font-medium">
+                  <span className="absolute -top-2 -right-2 bg-red-500 cursor-pointer text-white text-[10px] rounded-full h-4 w-4 flex items-center justify-center font-medium">
                     {cartCount}
                   </span>
                 )}

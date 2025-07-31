@@ -2,22 +2,21 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { Link, useNavigate } from "react-router-dom";
-import { Search, MapPin, Phone, Clock, Navigation, ShoppingCart, ArrowLeft, ChevronDown } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Search, MapPin, Phone, Clock, Navigation, ShoppingCart, ChevronDown } from "lucide-react";
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import logo from "@/assets/logo.jpg";
 
 export function StoreLocationPage() {
-  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedService, setSelectedService] = useState("All Services");
-  const [cartCount, setCartCount] = useState(() => {
+  const [cartCount] = useState(() => {
     const savedCart = localStorage.getItem("cartItems");
     if (savedCart) {
       const items = JSON.parse(savedCart);
-      return items.reduce((sum, item) => sum + (item.quantity || 1), 0);
+      return items.reduce((sum: any, item: any) => sum + (item.quantity || 1), 0);
     }
     return 0;
   });
@@ -67,7 +66,7 @@ export function StoreLocationPage() {
   );
 
   // Handle service filter change
-  const handleServiceChange = (e) => {
+  const handleServiceChange = (e: any) => {
     setSelectedService(e.target.value);
   };
 

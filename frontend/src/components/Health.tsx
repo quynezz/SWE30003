@@ -75,9 +75,9 @@ export function Health() {
         };
     }, []);
 
-    const toggleSaveArticle = (id) => {
-        setSavedArticles((prev) =>
-                         prev.includes(id) ? prev.filter((articleId) => articleId !== id) : [...prev, id]
+    const toggleSaveArticle = (id: any) => {
+        setSavedArticles((prev: any) =>
+                         prev.includes(id) ? prev.filter((articleId: any) => articleId !== id) : [...prev, id]
                         );
     };
 

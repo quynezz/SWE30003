@@ -17,7 +17,7 @@ export function Navbar() {
     const savedCart = localStorage.getItem("cartItems");
     if (savedCart) {
       const items = JSON.parse(savedCart);
-      return items.reduce((sum, item) => sum + (item.quantity || 1), 0);
+      return items.reduce((sum: any, item: any) => sum + (item.quantity || 1), 0);
     }
     return 0;
   });
@@ -36,6 +36,15 @@ export function Navbar() {
     },
     { name: "Prescription", link: "/prescription" },
     { name: "Stores", link: "/branches" },
+    { name: "Articles", link: "/branches" ,
+        dropdown: [
+        { name: "Vitatmins", link: "/articles/vitamins" },
+        { name: "Nutritions", link: "/articles/diabetes" },
+        { name: "Heath-related", link: "/articles/heart-health" },
+        { name: "cardiovascular", link: "/articles/immunity" },
+      ],
+},
+{ name: "Track Order", link: "/track" },
   ];
 
   useEffect(() => {
@@ -66,10 +75,10 @@ export function Navbar() {
   }, []);
 
   useEffect(() => {
-    const handleStorageChange = (event) => {
+    const handleStorageChange = (event: any) => {
       if (event.key === "cartItems") {
         const items = event.newValue ? JSON.parse(event.newValue) : [];
-        setCartCount(items.reduce((sum, item) => sum + (item.quantity || 1), 0));
+        setCartCount(items.reduce((sum: any, item: any) => sum + (item.quantity || 1), 0));
       }
     };
     window.addEventListener("storage", handleStorageChange);
@@ -77,7 +86,7 @@ export function Navbar() {
   }, []);
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
+    const handleClickOutside = (event: any) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setOpenDropdown(null);
       }
@@ -87,7 +96,7 @@ export function Navbar() {
   }, []);
 
   useEffect(() => {
-    const handleKeyDown = (event) => {
+    const handleKeyDown = (event: any) => {
       if (event.key === "Escape") {
         setOpenDropdown(null);
         setIsMobileMenuOpen(false);
@@ -97,7 +106,7 @@ export function Navbar() {
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-  const toggleDropdown = (index) => {
+  const toggleDropdown = (index: any) => {
     setOpenDropdown(openDropdown === index ? null : index);
   };
 
