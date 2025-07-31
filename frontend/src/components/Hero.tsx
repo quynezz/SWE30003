@@ -1,9 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle, Truck, Shield, Clock, Star } from "lucide-react";
+import { CheckCircle, Truck, Shield, Clock, Star, ArrowRight, Upload } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
-import { ArrowRight } from "lucide-react";
-import pic3 from "../assets/pic3.jpg"; // Adjust the path as necessary
+import pic3 from "../assets/pic3.jpg";
+import { Link } from "react-router-dom";
 
 export function Hero() {
     const [isVisible, setIsVisible] = useState(false);
@@ -63,7 +63,7 @@ export function Hero() {
             className="h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/50 overflow-hidden flex items-center"
         >
             <div className="absolute inset-0 overflow-hidden">
-                <div className={`absolute -top-24 -right-24 w-96 h-96 bg-blue-100/30 rounded-full blur-3xl ${isVisible ? 'animate-pulse' : ''}`}></div>
+                <div className={`absolute -top-24 -right RELEASEDright-24 w-96 h-96 bg-blue-100/30 rounded-full blur-3xl ${isVisible ? 'animate-pulse' : ''}`}></div>
                 <div className={`absolute -bottom-32 -left-32 w-80 h-80 bg-indigo-100/40 rounded-full blur-3xl ${isVisible ? 'animate-pulse delay-1000' : ''}`}></div>
                 <div className={`absolute top-1/2 left-1/3 w-64 h-64 bg-cyan-100/20 rounded-full blur-2xl ${isVisible ? 'animate-pulse delay-500' : ''}`}></div>
             </div>
@@ -100,22 +100,24 @@ export function Hero() {
                         </p>
 
                         <div className={`flex flex-col sm:flex-row gap-4 ${isVisible ? 'animate-fadeInUp delay-400' : ''}`}>
-                            <Button
-                                size="lg"
-                                className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white px-6 py-3 text-base font-semibold shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105 group"
-                                onClick={() => window.location.href = '/products'}
+                            <Link
+                                to="/products"
+                                className="group relative inline-flex items-center bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white px-6 py-3 text-sm font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                                aria-label="Shop Medicines"
                             >
-                                Shop Medicines
-                                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                            </Button>
-                            <Button
-                                size="lg"
-                                variant="outline"
-                                className="border-2 border-gray-300 hover:border-blue-600 text-gray-700 hover:text-blue-600 px-6 py-3 text-base font-semibold hover:bg-blue-50 transition-all duration-300 transform hover:scale-105"
-                                onClick={() => window.location.href = '/prescription'}
+                                <span className="relative z-10">Shop Medicines</span>
+                                <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
+                                <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-cyan-500 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+                            </Link>
+                            <Link
+                                to="/prescription"
+                                className="group relative inline-flex items-center border-2 border-blue-600 text-blue-600 hover:bg-blue-50 px-6 py-3 text-sm font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                                aria-label="Upload Prescription"
                             >
-                                Upload Prescription
-                            </Button>
+                                <Upload className="h-4 w-4 mr-2 group-hover:scale-110 transition-transform duration-300" />
+                                <span className="relative z-10">Upload Prescription</span>
+                                <div className="absolute inset-0 bg-blue-100 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+                            </Link>
                         </div>
 
                         <div className={`space-y-3 ${isVisible ? 'animate-fadeInUp delay-500' : ''}`}>
