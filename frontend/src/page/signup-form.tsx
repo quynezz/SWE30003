@@ -132,7 +132,7 @@ export function SignUpForm({ className, ...props }) {
                 life: 2000,
             });
             setTimeout(() => {
-                window.location.href = '/login';
+                window.location.href = '/';
             }, 2000);
         } catch (error) {
             toast.current?.show({
