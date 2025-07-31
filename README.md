@@ -36,6 +36,9 @@ Long Chau Pharmacy is a full-stack web application built to simplify healthcare 
   - Vite - Fast frontend build tool
   - ESLint - For code linting and maintaining code quality
   - Prettier - For consistent code formatting
+- **Data**:
+  - Scraped data from Long Chau Pharmacy's website for product listings
+    - Mock data for featured products and store locations
 - **Other**:
   - LocalStorage for cart persistence
   - Simulated API calls for demo purposes
