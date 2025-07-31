@@ -17,7 +17,7 @@ export function Services() {
                 "Pharmacist consultation",
                 "Insurance coverage check",
             ],
-            gradient: "from-blue-500 to-cyan-500",
+            gradient: "from-blue-200 to-cyan-200",
             action: { text: "Upload Now", link: "/prescription" },
         },
         {
@@ -29,7 +29,7 @@ export function Services() {
                 "Medication reviews",
                 "Health screenings",
             ],
-            gradient: "from-green-500 to-emerald-500",
+            gradient: "from-green-200 to-emerald-200",
             action: { text: "Book Consultation", link: "/consultation" },
         },
         {
@@ -41,7 +41,7 @@ export function Services() {
                 "Temperature-controlled transport",
                 "Real-time tracking",
             ],
-            gradient: "from-purple-500 to-indigo-500",
+            gradient: "from-purple-200 to-indigo-200",
             action: { text: "Track Order", link: "/track" },
         },
         {
@@ -53,7 +53,7 @@ export function Services() {
                 "Batch tracking",
                 "Expiry date monitoring",
             ],
-            gradient: "from-red-500 to-orange-500",
+            gradient: "from-red-200 to-orange-200",
             action: { text: "Learn More", link: "/quality" },
         },
     ];

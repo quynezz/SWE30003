@@ -164,7 +164,7 @@ export function Feature2() {
                         <Button
                             variant="outline"
                             size="lg"
-                            className={`border-2 border-white/80 text-white hover:bg-gradient-to-r hover:from-blue-600 hover:to-cyan-600 hover:border-none transition-all duration-300 transform hover:scale-105 ${isVisible ? 'animate-pulse' : ''}`}
+                            className={`border-2 border-white/80 text-white bg-gradient-to-r hover:bg-gradient-to-r hover:from-blue-600 hover:to-cyan-600 hover:border-none transition-all duration-300 transform hover:scale-105 cursor-pointer ${isVisible ? 'animate-pulse' : ''}`}
                         >
                             View All Products
                             <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
