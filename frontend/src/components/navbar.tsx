@@ -259,7 +259,7 @@ export function Navbar() {
             >
               <ShoppingCart className="h-5 w-5 text-gray-600 group-hover:text-blue-600 transition-colors" />
               {cartCount > 0 && (
-                <Badge className="absolute -top-1 -right-1 h-4 w-4 rounded-full p-0 flex items-center justify-center text-[10px] bg-green-500 animate-pulse">
+                <Badge className="absolute -top-1 -right-1 h-4 w-4 rounded-full p-0 flex items-center justify-center text-[10px] bg-red-500 animate-pulse">
                   {cartCount}
                 </Badge>
               )}
