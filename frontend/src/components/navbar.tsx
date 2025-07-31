@@ -231,6 +231,7 @@ export function Navbar() {
           </div>
 
           {/* Icons */}
+          <Link to="/notification">
           <Button
             variant="ghost"
             size="icon"
@@ -242,6 +243,7 @@ export function Navbar() {
               3
             </Badge>
           </Button>
+        </Link>
           <Button
             variant="ghost"
             size="icon"

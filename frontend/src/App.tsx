@@ -11,6 +11,7 @@ import { CartPage } from "@/page/cart";
 import { Routes, Route } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import { OrderSuccessPage } from "@/page/order_success";
+import { NotificationPage } from "@/page/notification";
 
 function App() {
   return (
@@ -29,6 +30,9 @@ function App() {
         <Route path="/track" element={<Track/>} />
         <Route path="/cart" element={<CartPage/>} />
         <Route path="/order-success" element={<OrderSuccessPage/>} />
+        <Route path="/notification" element={<NotificationPage />} />
+
+        {/* Uncomment the following lines if you have staff or admin dashboards */}
 
         {/* <Route path="/staff-dashboard" element={<StaffDashboard />} />
         <Route path="/admin-dashboard" element={<AdminDashboard />} /> */}
