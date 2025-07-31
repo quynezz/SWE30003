@@ -1,6 +1,6 @@
 # Long Chau Pharmacy 🩺
 
-![Long Chau Logo](src/assets/logo.jpg)Welcome to **Long Chau Pharmacy**, Vietnam's premier online pharmacy platform designed to make healthcare accessible, convenient, and reliable. This web application provides a seamless user experience for browsing medicines, locating stores, managing orders, and more, all wrapped in a modern, responsive, and user-friendly interface.
+Welcome to **Long Chau Pharmacy**, Vietnam's premier online pharmacy platform designed to make healthcare accessible, convenient, and reliable. This web application provides a seamless user experience for browsing medicines, locating stores, managing orders, and more, all wrapped in a modern, responsive, and user-friendly interface.
 
 ---
 
