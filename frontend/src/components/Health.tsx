@@ -176,7 +176,6 @@ export function Health() {
             variant="ghost"
             size="sm"
             className={`p-0 h-auto text-blue-600 hover:text-blue-700 bg-gradient-to-r ${tip.gradient} bg-clip-text text-transparent group-hover:underline`}
-            onClick={() => window.location.href = tip.link}
             >
             Read More
             <ArrowRight className="ml-1 h-3 w-3 group-hover:translate-x-1 transition-transform" />

@@ -3,8 +3,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Link, useParams } from "react-router-dom";
-import { useState, useRef } from "react";
-import { Toast } from "primereact/toast";
+import { useState } from "react";
+import { useRef } from 'react';
+import { Toast } from 'primereact/toast';
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 import { ShoppingCart, Bookmark, ArrowLeft } from "lucide-react";
 import logo from "@/assets/logo.jpg";
@@ -14,133 +15,128 @@ import pic6 from "@/assets/pic6.jpg";
 import pic7 from "@/assets/pic7.jpg";
 
 export function ArticlePage() {
-    const { articleId } = useParams();
+    const { articleId } = useParams(); // Get article ID from URL
     const toast = useRef(null);
     const [savedArticles, setSavedArticles] = useState(() => {
         const saved = localStorage.getItem("savedArticles");
         return saved ? JSON.parse(saved) : [];
     });
-    const [cartCount, setCartCount] = useState(() => {
+    const [cartCount: = useState(() => {
         const savedCart = localStorage.getItem("cartItems");
         if (savedCart) {
             const items = JSON.parse(savedCart);
-            return items.reduce((sum, item) => sum + (item.quantity || 1), 0);
+            return items.reduce((sum: any, item: any) => sum + (item.quantity || 1), 0);
         }
         return 0;
     });
 
-    const formatVND = (number) => {
-        if (isNaN(number) || number === null) return "0 vnđ";
-        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " vnđ";
-    };
-
     const articles = [
         {
-            id: "1",
-            title: "10 Loại Vitamin Thiết Yếu Cho Sức Khỏe Hàng Ngày",
-            category: "Dinh Dưỡng",
-            readTime: "5 phút đọc",
+            id: "vitamins",
+            title: "10 Essential Vitamins for Daily Health",
+            category: "Nutrition",
+            readTime: "5 min read",
             image: pic4,
-            gradient: "from-blue-500 to-cyan-500",
-            excerpt: "Khám phá các vitamin quan trọng mà cơ thể bạn cần mỗi ngày để duy trì sức khỏe tối ưu.",
+            gradient: "from-blue-500 to-cyan-500 PropTypes.element",
+            excerpt: "Discover the most important vitamins your body needs every day for optimal health and wellness.",
             content: [
                 {
-                    heading: "Giới Thiệu Về Vitamin",
-                    text: "Vitamin là các hợp chất hữu cơ mà cơ thể cần với lượng nhỏ để hoạt động bình thường. Chúng đóng vai trò quan trọng trong quá trình trao đổi chất, miễn dịch và sức khỏe tổng thể. Bài viết này khám phá 10 loại vitamin thiết yếu bạn nên bổ sung vào thói quen hàng ngày."
+                    heading: "Introduction to Vitamins",
+                    text: "Vitamins are organic compounds that our bodies need in small amounts to function properly. They play critical roles in metabolism, immunity, and overall health. This article explores the 10 essential vitamins you should incorporate into your daily routine."
                 },
                 {
-                    heading: "Các Vitamin Quan Trọng",
-                    text: "1. **Vitamin A**: Hỗ trợ thị lực và sức khỏe da. Có trong cà rốt, khoai lang và rau bina.\n2. **Vitamin C**: Tăng cường miễn dịch và phục hồi da. Có trong trái cây họ cam và ớt chuông.\n3. **Vitamin D**: Cải thiện sức khỏe xương và miễn dịch. Có từ ánh nắng mặt trời và sữa tăng cường.\n4. **Vitamin E**: Bảo vệ tế bào khỏi tổn thương. Có trong các loại hạt và hạt.\n5. **Vitamin K**: Cần thiết cho quá trình đông máu. Có trong rau xanh.\n6. **Vitamin nhóm B (B1, B2, B3, B5, B6, B7, B9, B12)**: Hỗ trợ sản xuất năng lượng và chức năng não. Có trong ngũ cốc nguyên hạt, trứng và thịt.\n7. **Vitamin B12**: Quan trọng cho chức năng thần kinh và sản xuất hồng cầu, đặc biệt với người ăn chay."
+                    heading: "Key Vitamins for Health",
+                    text: "1. **Vitamin A**: Supports vision and skin health. Found in carrots, sweet potatoes, and spinach.\n2. **Vitamin C**: Boosts immunity and skin repair. Available in citrus fruits and bell peppers.\n3. **Vitamin D**: Enhances bone health and immunity. Get it from sunlight and fortified dairy.\n4. **Vitamin E**: Protects cells from damage. Found in nuts and seeds.\n5. **Vitamin K**: Essential for blood clotting. Available in leafy greens.\n6. **B Vitamins (B1, B2, B3, B5, B6, B7, B9, B12)**: Support energy production and brain function. Found in whole grains, eggs, and meat.\n7. **Vitamin B12**: Crucial for nerve function and red blood cell production, especially for vegetarians."
                 },
                 {
-                    heading: "Cách Bổ Sung Vitamin",
-                    text: "Chế độ ăn uống cân bằng là cách tốt nhất để bổ sung các vitamin này, nhưng thực phẩm bổ sung có thể giúp nếu lượng dinh dưỡng từ thức ăn không đủ. Hãy tham khảo ý kiến bác sĩ trước khi bắt đầu sử dụng bất kỳ thực phẩm bổ sung nào."
+                    heading: "How to Incorporate Vitamins",
+                    text: "A balanced diet is the best way to get these vitamins, but supplements can help if dietary intake is insufficient. Consult a healthcare provider before starting any supplement regimen."
                 }
             ]
         },
         {
-            id: "2",
-            title: "Quản Lý Tiểu Đường: Hướng Dẫn Toàn Diện",
-            category: "Quản Lý Sức Khỏe",
-            readTime: "8 phút đọc",
+            id: "diabetes",
+            title: "Managing Diabetes: A Complete Guide",
+            category: "Health Management",
+            readTime: "8 min read",
             image: pic5,
             gradient: "from-green-500 to-emerald-500",
-            excerpt: "Tìm hiểu các chiến lược hiệu quả để quản lý tiểu đường thông qua thuốc, chế độ ăn và thay đổi lối sống.",
+            excerpt: "Learn effective strategies for managing diabetes through medication, diet, and lifestyle changes.",
             content: [
                 {
-                    heading: "Hiểu Biết Về Tiểu Đường",
-                    text: "Tiểu đường là một tình trạng mãn tính nơi cơ thể không thể điều chỉnh lượng đường trong máu đúng cách. Tiểu đường loại 1 là tự miễn, trong khi loại 2 thường liên quan đến lối sống. Quản lý hiệu quả có thể cải thiện chất lượng cuộc sống."
+                    heading: "Understanding Diabetes",
+                    text: "Diabetes is a chronic condition where the body cannot properly regulate blood sugar levels. Type 1 diabetes is autoimmune, while Type 2 is often lifestyle-related. Effective management can improve quality of life."
                 },
                 {
-                    heading: "Chế Độ Ăn Uống",
-                    text: "Tập trung vào thực phẩm có chỉ số đường huyết thấp như ngũ cốc nguyên hạt, rau củ và protein nạc. Tránh đồ uống có đường và carbohydrate tinh chế. Theo dõi khẩu phần ăn và duy trì lịch ăn uống đều đặn."
+                    heading: "Diet and Nutrition",
+                    text: "Focus on low-glycemic foods like whole grains, vegetables, and lean proteins. Avoid sugary drinks and processed carbs. Monitor portion sizes and maintain a consistent eating schedule."
                 },
                 {
-                    heading: "Thay Đổi Lối Sống",
-                    text: "Tập thể dục thường xuyên, như đi bộ 30 phút mỗi ngày, cải thiện độ nhạy insulin. Các kỹ thuật quản lý căng thẳng như yoga và thiền cũng có thể giúp ích. Kiểm tra sức khỏe định kỳ với bác sĩ là rất quan trọng."
+                    heading: "Lifestyle Changes",
+                    text: "Regular exercise, such as 30 minutes of walking daily, improves insulin sensitivity. Stress management techniques like yoga and meditation can also help. Regular check-ups with your doctor are crucial."
                 }
             ]
         },
         {
-            id: "3",
-            title: "Sức Khỏe Tim Mạch: Mẹo Phòng Ngừa",
-            category: "Tim Mạch",
-            readTime: "6 phút đọc",
+            id: "heart-health",
+            title: "Heart Health: Prevention Tips",
+            category: "Cardiovascular",
+            readTime: "6 min read",
             image: pic6,
             gradient: "from-red-500 to-orange-500",
-            excerpt: "Những cách đơn giản nhưng hiệu quả để duy trì trái tim khỏe mạnh và ngăn ngừa bệnh tim mạch.",
+            excerpt: "Simple yet effective ways to maintain a healthy heart and prevent cardiovascular diseases.",
             content: [
                 {
-                    heading: "Tại Sao Sức Khỏe Tim Mạch Quan Trọng",
-                    text: "Bệnh tim mạch là nguyên nhân hàng đầu gây tử vong trên toàn cầu. Các biện pháp phòng ngừa có thể giảm đáng kể nguy cơ và cải thiện chức năng tim."
+                    heading: "Why Heart Health Matters",
+                    text: "Cardiovascular diseases are a leading cause of death globally. Preventive measures can significantly reduce your risk and improve heart function."
                 },
                 {
-                    heading: "Chiến Lược Phòng Ngừa",
-                    text: "1. **Chế Độ Ăn Uống Lành Mạnh**: Ăn các thực phẩm tốt cho tim như cá béo, các loại hạt và ngũ cốc nguyên hạt. Hạn chế chất béo bão hòa và muối.\n2. **Tập Thể Dục**: Đặt mục tiêu ít nhất 150 phút hoạt động aerobic vừa phải mỗi tuần.\n3. **Bỏ Thuốc Lá**: Hút thuốc làm tổn thương mạch máu và tăng nguy cơ bệnh tim.\n4. **Kiểm Tra Định Kỳ**: Theo dõi cholesterol và huyết áp thường xuyên."
+                    heading: "Prevention Strategies",
+                    text: "1. **Healthy Diet**: Eat heart-healthy foods like fatty fish, nuts, and whole grains. Limit saturated fats and sodium.\n2. **Exercise**: Aim for at least 150 minutes of moderate aerobic activity per week.\n3. **Quit Smoking**: Smoking damages blood vessels and increases heart disease risk.\n4. **Regular Check-ups**: Monitor cholesterol and blood pressure regularly."
                 },
                 {
-                    heading: "Thực Phẩm Bổ Sung Cho Tim",
-                    text: "Axit béo Omega-3 và CoQ10 có thể hỗ trợ sức khỏe tim mạch. Luôn tham khảo ý kiến chuyên gia y tế trước khi bổ sung thực phẩm bổ sung."
+                    heading: "Supplements for Heart Health",
+                    text: "Omega-3 fatty acids and CoQ10 may support heart health. Always consult a healthcare professional before adding supplements."
                 }
             ]
         },
         {
-            id: "3",
-            title: "Tăng Cường Hệ Miễn Dịch Tự Nhiên",
-            category: "Miễn Dịch",
-            readTime: "4 phút đọc",
+            id: "immunity",
+            title: "Boost Your Immune System Naturally",
+            category: "Immunity",
+            readTime: "4 min read",
             image: pic7,
             gradient: "from-purple-500 to-indigo-500",
-            excerpt: "Các phương pháp tự nhiên và thực phẩm bổ sung để tăng cường hệ miễn dịch quanh năm.",
+            excerpt: "Natural methods and supplements to strengthen your immune system year-round.",
             content: [
                 {
-                    heading: "Tầm Quan Trọng Của Miễn Dịch",
-                    text: "Hệ miễn dịch mạnh giúp cơ thể chống lại nhiễm trùng và duy trì sức khỏe. Các phương pháp tự nhiên có thể tăng cường khả năng phòng vệ của cơ thể."
+                    heading: "The Importance of Immunity",
+                    text: "A strong immune system helps your body fight off infections and stay healthy. Natural methods can enhance your body's defenses."
                 },
                 {
-                    heading: "Cách Tăng Cường Tự Nhiên",
-                    text: "1. **Dinh Dưỡng**: Ăn thực phẩm giàu Vitamin C (trái cây họ cam), Vitamin D (cá), và kẽm (các loại hạt).\n2. **Giấc Ngủ**: Đặt mục tiêu ngủ 7-8 giờ chất lượng mỗi đêm.\n3. **Hydrat Hóa**: Uống đủ nước để hỗ trợ các chức năng cơ thể.\n4. **Tập Thể Dục**: Hoạt động thể chất vừa phải tăng cường phản ứng miễn dịch."
+                    heading: "Natural Boosters",
+                    text: "1. **Nutrition**: Eat foods rich in Vitamin C (citrus fruits), Vitamin D (fish), and zinc (nuts, seeds).\n2. **Sleep**: Aim for 7-8 hours of quality sleep nightly.\n3. **Hydration**: Drink plenty of water to support bodily functions.\n4. **Exercise**: Moderate physical activity boosts immune response."
                 },
                 {
-                    heading: "Thực Phẩm Bổ Sung",
-                    text: "Xem xét sử dụng probiotics và thực phẩm bổ sung từ quả cơm cháy để hỗ trợ miễn dịch. Tham khảo ý kiến bác sĩ để đảm bảo an toàn."
+                    heading: "Supplements",
+                    text: "Consider probiotics and elderberry supplements for additional immune support. Consult a doctor to ensure they are safe for you."
                 }
             ]
         }
     ];
 
-    const article = articles.find((a) => a.id === articleId) || articles[0];
+    const article = articles.find((a) => a.id === articleId) || articles[0]; // Fallback to first article if ID not found
 
-    const toggleSaveArticle = (id) => {
-        setSavedArticles((prev) => {
+    const toggleSaveArticle = (id: any) => {
+        setSavedArticles((prev: any) => {
             const newSaved = prev.includes(id)
-                ? prev.filter((articleId) => articleId !== id)
+                ? prev.filter((articleId: any) => articleId !== id)
                 : [...prev, id];
             localStorage.setItem("savedArticles", JSON.stringify(newSaved));
             toast.current?.show({
                 severity: newSaved.includes(id) ? 'success' : 'info',
-                summary: newSaved.includes(id) ? 'Đã Lưu' : 'Đã Bỏ Lưu',
-                detail: newSaved.includes(id) ? 'Bài viết đã được lưu thành công' : 'Bài viết đã được xóa khỏi danh sách lưu',
+                summary: newSaved.includes(id) ? 'Saved' : 'Unsaved',
+                detail: newSaved.includes(id) ? 'Article saved successfully' : 'Article removed from saved',
                 life: 2000,
             });
             return newSaved;
@@ -151,28 +147,29 @@ export function ArticlePage() {
         <div className="min-h-screen w-full bg-gradient-to-br from-gray-50 to-blue-50/30">
             <Toast ref={toast} />
             <div className="w-full mx-auto flex flex-col">
-                <header className="bg-white/95 backdrop-blur-lg shadow-sm sticky top-0 z-50">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex items-center justify-between">
-                        <div className="flex items-center space-x-2">
+                {/* Header */}
+                <header className="bg-white/95 backdrop-blur-sm border-b shadow-sm sticky top-0 z-50">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
+                        <div className="flex items-center space-x-3">
                             <Link to="/" className="flex items-center space-x-2">
-                                <div className="h-8 w-8 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-lg flex items-center justify-center overflow-hidden">
+                                <div className="h-10 w-10 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-lg flex items-center justify-center overflow-hidden">
                                     <img
                                         src={logo}
-                                        alt="Long Châu Logo"
+                                        alt="Long Chau Logo"
                                         className="h-full w-full object-cover"
                                     />
                                 </div>
-                                <span className="font-bold text-lg bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
-                                    Long Châu
+                                <span className="font-bold text-xl bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
+                                    Long Chau
                                 </span>
                             </Link>
                         </div>
                         <div className="relative">
                             <Link to="/cart">
-                                <Button variant="outline" size="icon" className="h-9 w-9 hover:bg-blue-50">
+                                <Button variant="outline" size="icon" className="hover:bg-blue-50">
                                     <ShoppingCart className="h-5 w-5" />
                                     {cartCount > 0 && (
-                                        <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] rounded-full h-4 w-4 flex items-center justify-center font-medium">
+                                        <span className="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] rounded-full h-4 w-4 flex items-center justify-center font-medium">
                                             {cartCount}
                                         </span>
                                     )}
@@ -182,19 +179,21 @@ export function ArticlePage() {
                     </div>
                 </header>
 
-                <div className="flex-1 p-4 sm:p-6 lg:p-8">
+                {/* Main Content */}
+                <div className="flex-1 p-4 sm:p-6">
                     <Card className="w-full max-w-3xl mx-auto bg-white shadow-lg rounded-xl border border-gray-100">
-                        <CardContent className="p-4 sm:p-6 lg:p-8">
+                        <CardContent className="p-6 sm:p-8">
+                            {/* Article Header */}
                             <div className="mb-6">
-                                <Link to="/articles" className="inline-flex items-center text-blue-600 hover:text-blue-700 text-sm mb-4">
+                                <Link to="/" className="inline-flex items-center text-blue-600 hover:text-blue-700 text-sm mb-4">
                                     <ArrowLeft className="h-4 w-4 mr-1" />
-                                    Quay lại Mẹo Sức Khỏe
+                                    Back to Health Tips
                                 </Link>
                                 <div className="relative">
                                     <img
                                         src={article.image}
                                         alt={article.title}
-                                        className="w-full h-48 sm:h-56 lg:h-64 object-cover rounded-lg mb-4"
+                                        className="w-full h-64 object-cover rounded-lg mb-4"
                                     />
                                     <Badge className={cn("absolute top-3 left-3 bg-gradient-to-r", article.gradient, "text-white font-semibold")}>
                                         {article.category}
@@ -202,9 +201,9 @@ export function ArticlePage() {
                                     <Button
                                         variant="ghost"
                                         size="icon"
-                                        className="absolute top-3 right-3 bg-white/80 hover:bg-white rounded-full h-8 w-8"
+                                        className="absolute top-3 right-3 bg-white/80 hover:bg-white rounded-full"
                                         onClick={() => toggleSaveArticle(article.id)}
-                                        aria-label={savedArticles.includes(article.id) ? "Bỏ lưu bài viết" : "Lưu bài viết"}
+                                        aria-label={savedArticles.includes(article.id) ? "Unsave article" : "Save article"}
                                     >
                                         <Bookmark
                                             className={cn(
@@ -214,41 +213,43 @@ export function ArticlePage() {
                                         />
                                     </Button>
                                 </div>
-                                <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-2">{article.title}</h1>
+                                <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">{article.title}</h1>
                                 <div className="flex items-center justify-between text-xs text-gray-500">
                                     <span>{article.readTime}</span>
-                                    <span>{new Date().toLocaleDateString('vi-VN')}</span>
+                                    <span>{new Date().toLocaleDateString()}</span>
                                 </div>
                             </div>
 
+                            {/* Article Content */}
                             <div className="prose prose-sm sm:prose max-w-none">
-                                <p className="text-gray-600 mb-6 text-sm sm:text-base">{article.excerpt}</p>
+                                <p className="text-gray-600 mb-6">{article.excerpt}</p>
                                 {article.content.map((section, index) => (
                                     <div key={index} className="mb-6">
-                                        <h2 className="text-base sm:text-lg lg:text-xl font-semibold text-gray-800">{section.heading}</h2>
-                                        <p className="text-gray-700 whitespace-pre-line text-sm sm:text-base">{section.text}</p>
+                                        <h2 className="text-lg sm:text-xl font-semibold text-gray-800">{section.heading}</h2>
+                                        <p className="text-gray-700 whitespace-pre-line">{section.text}</p>
                                     </div>
                                 ))}
                             </div>
 
+                            {/* Footer Actions */}
                             <div className="flex items-center justify-between mt-6 pt-4 border-t border-gray-200">
-                                <Link to="/articles" className="inline-flex items-center text-blue-600 hover:text-blue-700">
+                                <Link to="/articles/health" className="inline-flex items-center text-blue-600 hover:text-blue-700">
                                     <Button
                                         variant="outline"
-                                        className="text-blue-600 hover:bg-blue-50 text-xs sm:text-sm h-8 sm:h-9"
-                                        aria-label="Khám phá thêm bài viết sức khỏe"
+                                        className="text-blue-600 hover:bg-blue-50 text-xs h-8"
+                                        aria-label="Back to health tips"
                                     >
-                                        Khám Phá Thêm Bài Viết
+                                        Explore More Articles
                                     </Button>
                                 </Link>
                                 <Button
                                     variant="ghost"
                                     size="sm"
-                                    className={cn("text-xs sm:text-sm bg-gradient-to-r", article.gradient, "bg-clip-text text-transparent hover:underline")}
+                                    className={cn("text-xs bg-gradient-to-r", article.gradient, "bg-clip-text text-transparent hover:underline")}
                                     onClick={() => toggleSaveArticle(article.id)}
-                                    aria-label={savedArticles.includes(article.id) ? "Bỏ lưu bài viết" : "Lưu bài viết"}
+                                    aria-label={savedArticles.includes(article.id) ? "Unsave article" : "Save article"}
                                 >
-                                    {savedArticles.includes(article.id) ? "Bỏ Lưu Bài Viết" : "Lưu Bài Viết"}
+                                    {savedArticles.includes(article.id) ? "Unsave Article" : "Save Article"}
                                 </Button>
                             </div>
                         </CardContent>
@@ -269,20 +270,17 @@ export function ArticlePage() {
                     margin-bottom: 1em;
                 }
                 @media (max-width: 640px) {
-                    .max-w-3xl {
+                    .max-w-sm {
                         max-width: 100%;
                     }
-                    .p-4 {
+                    .p-6 {
                         padding: 1rem;
                     }
-                    .text-2xl {
-                        font-size: 1.25rem;
+                    .text-3xl {
+                        font-size: 1.5rem;
                     }
-                    .text-lg {
-                        font-size: 1rem;
-                    }
-                    .text-sm {
-                        font-size: 0.875rem;
+                    .text-xl {
+                        font-size: 1.125rem;
                     }
                     .text-xs {
                         font-size: 0.75rem;
@@ -290,12 +288,7 @@ export function ArticlePage() {
                     .h-8 {
                         height: 2rem;
                     }
-                    .h-48 {
-                        height: 10rem;
-                    }
-                }
-                @media (min-width: 640px) and (max-width: 1024px) {
-                    .h-56 {
+                    .h-64 {
                         height: 12rem;
                     }
                 }
