@@ -12,7 +12,7 @@ import { Routes, Route } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import { OrderSuccessPage } from "@/page/order_success";
 import { NotificationPage } from "@/page/notification";
-import { ArticlePage } from "@/page/ariticles";
+import { ArticlePage } from "@/page/articles";
 
 function App() {
   return (
@@ -26,17 +26,12 @@ function App() {
         <Route path="/checkout" element={<CheckoutPage />} />
         <Route path="/prescription" element={<UploadPrescriptionPage />} />
         <Route path="/branches" element={<StoreLocationPage />} />
-        <Route path="/product/:id" element={< ProductDetailPage />} />
-        <Route path="/track" element={<Track/>} />
-        <Route path="/cart" element={< CartPage />} />
-        <Route path="/order-success" element={< OrderSuccessPage />} />
-        <Route path="/notification" element={< NotificationPage />} />
-        <Route path="/articles/:articleId" element={< ArticlePage />} />
-
-        {/* Uncomment the following lines if you have staff or admin dashboards */}
-
-        {/* <Route path="/staff-dashboard" element={<StaffDashboard />} />
-        <Route path="/admin-dashboard" element={<AdminDashboard />} /> */}
+        <Route path="/product/:id" element={<ProductDetailPage />} />
+        <Route path="/track" element={<Track />} />
+        <Route path="/cart" element={<CartPage />} />
+        <Route path="/order-success" element={<OrderSuccessPage />} />
+        <Route path="/notification" element={<NotificationPage />} />
+        <Route path="/articles/:articleId" element={<ArticlePage />} />
       </Routes>
     </AnimatePresence>
   );
