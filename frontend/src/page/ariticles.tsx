@@ -24,7 +24,7 @@ export function ArticlePage() {
         const savedCart = localStorage.getItem("cartItems");
         if (savedCart) {
             const items = JSON.parse(savedCart);
-            return items.reduce((sum, item) => sum + (item.quantity || 1), 0);
+            return items.reduce((sum: any, item: any) => sum + (item.quantity || 1), 0);
         }
         return 0;
     });
@@ -36,7 +36,7 @@ export function ArticlePage() {
             category: "Nutrition",
             readTime: "5 min read",
             image: pic4,
-            gradient: "from-blue-500 to-cyan-500",
+            gradient: "from-blue-500 to-cyan-500 PropTypes.element",
             excerpt: "Discover the most important vitamins your body needs every day for optimal health and wellness.",
             content: [
                 {
@@ -126,10 +126,10 @@ export function ArticlePage() {
 
     const article = articles.find((a) => a.id === articleId) || articles[0]; // Fallback to first article if ID not found
 
-    const toggleSaveArticle = (id) => {
-        setSavedArticles((prev) => {
+    const toggleSaveArticle = (id: any) => {
+        setSavedArticles((prev: any) => {
             const newSaved = prev.includes(id)
-                ? prev.filter((articleId) => articleId !== id)
+                ? prev.filter((articleId: any) => articleId !== id)
                 : [...prev, id];
             localStorage.setItem("savedArticles", JSON.stringify(newSaved));
             toast.current?.show({
