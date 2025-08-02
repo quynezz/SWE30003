@@ -7,6 +7,7 @@ import pic4 from "@/assets/pic4.jpg";
 import pic5 from "@/assets/pic5.jpg";
 import pic6 from "@/assets/pic6.jpg";
 import pic7 from "@/assets/pic7.jpg";
+import { Link } from "react-router-dom";
 
 export function Health() {
     const [isVisible, setIsVisible] = useState(false);
@@ -169,6 +170,8 @@ export function Health() {
             {/* Read Time and Button */}
             <div className="flex items-center justify-between text-xs text-gray-500">
             <span>{tip.readTime}</span>
+            <Link
+            to={tip.link}>
             <Button
             variant="ghost"
             size="sm"
@@ -178,6 +181,7 @@ export function Health() {
             Read More
             <ArrowRight className="ml-1 h-3 w-3 group-hover:translate-x-1 transition-transform" />
             </Button>
+            </Link>
             </div>
 
             {/* Hover Effect Line */}

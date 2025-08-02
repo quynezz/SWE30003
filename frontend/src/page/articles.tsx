@@ -36,7 +36,7 @@ export function ArticlePage() {
 
     const articles = [
         {
-            id: "vitamins",
+            id: "1",
             title: "10 Loại Vitamin Thiết Yếu Cho Sức Khỏe Hàng Ngày",
             category: "Dinh Dưỡng",
             readTime: "5 phút đọc",
@@ -59,7 +59,7 @@ export function ArticlePage() {
             ]
         },
         {
-            id: "diabetes",
+            id: "2",
             title: "Quản Lý Tiểu Đường: Hướng Dẫn Toàn Diện",
             category: "Quản Lý Sức Khỏe",
             readTime: "8 phút đọc",
@@ -82,7 +82,7 @@ export function ArticlePage() {
             ]
         },
         {
-            id: "heart-health",
+            id: "3",
             title: "Sức Khỏe Tim Mạch: Mẹo Phòng Ngừa",
             category: "Tim Mạch",
             readTime: "6 phút đọc",
@@ -105,7 +105,7 @@ export function ArticlePage() {
             ]
         },
         {
-            id: "immunity",
+            id: "3",
             title: "Tăng Cường Hệ Miễn Dịch Tự Nhiên",
             category: "Miễn Dịch",
             readTime: "4 phút đọc",
