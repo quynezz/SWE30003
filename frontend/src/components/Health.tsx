@@ -20,41 +20,41 @@ export function Health() {
     const healthTips = [
         {
             id: 1,
-            title: "10 Loại Vitamin Thiết Yếu Cho Sức Khỏe Hàng Ngày",
-            category: "Dinh Dưỡng",
-            readTime: "5 phút đọc",
+            title: "10 Essential Vitamins for Daily Health",
+            category: "Nutrition",
+            readTime: "5 min read",
             image: pic4,
-            excerpt: "Khám phá các vitamin quan trọng mà cơ thể bạn cần mỗi ngày để duy trì sức khỏe tối ưu.",
+            excerpt: "Discover the essential vitamins your body needs daily to maintain optimal health.",
             gradient: "from-blue-500 to-cyan-500",
             link: "/articles/vitamins",
         },
         {
             id: 2,
-            title: "Quản Lý Tiểu Đường: Hướng Dẫn Toàn Diện",
-            category: "Quản Lý Sức Khỏe",
-            readTime: "8 phút đọc",
+            title: "Managing Diabetes: A Comprehensive Guide",
+            category: "Health Management",
+            readTime: "8 min read",
             image: pic5,
-            excerpt: "Tìm hiểu các chiến lược hiệu quả để quản lý tiểu đường thông qua thuốc, chế độ ăn và thay đổi lối sống.",
+            excerpt: "Learn effective strategies for managing diabetes through medication, diet, and lifestyle changes.",
             gradient: "from-green-500 to-emerald-500",
             link: "/articles/diabetes",
         },
         {
             id: 3,
-            title: "Sức Khỏe Tim Mạch: Mẹo Phòng Ngừa",
-            category: "Tim Mạch",
-            readTime: "6 phút đọc",
+            title: "Heart Health: Prevention Tips",
+            category: "Cardiovascular",
+            readTime: "6 min read",
             image: pic6,
-            excerpt: "Những cách đơn giản nhưng hiệu quả để duy trì trái tim khỏe mạnh và ngăn ngừa bệnh tim mạch.",
+            excerpt: "Simple yet effective ways to maintain a healthy heart and prevent cardiovascular diseases.",
             gradient: "from-red-500 to-orange-500",
             link: "/articles/heart-health",
         },
         {
             id: 4,
-            title: "Tăng Cường Hệ Miễn Dịch Tự Nhiên",
-            category: "Miễn Dịch",
-            readTime: "4 phút đọc",
+            title: "Boost Your Immune System Naturally",
+            category: "Immunity",
+            readTime: "4 min read",
             image: pic7,
-            excerpt: "Các phương pháp tự nhiên và thực phẩm bổ sung để tăng cường hệ miễn dịch quanh năm.",
+            excerpt: "Natural methods and supplements to strengthen your immune system year-round.",
             gradient: "from-purple-500 to-indigo-500",
             link: "/articles/immunity",
         },
@@ -108,13 +108,13 @@ export function Health() {
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <div className={`text-center mb-12 sm:mb-16 ${isVisible ? 'animate-fadeInUp' : 'opacity-0 translate-y-10'}`}>
                     <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-                        Mẹo Sức Khỏe &{" "}
+                        Health Tips &{" "}
                         <span className="bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
-                            Bài Viết
+                            Articles
                         </span>
                     </h2>
                     <p className="text-sm sm:text-base text-gray-600 max-w-2xl mx-auto">
-                        Cập nhật những thông tin mới nhất về sức khỏe và mẹo chăm sóc bản thân
+                        Stay updated with the latest health insights and wellness tips
                     </p>
                 </div>
 
@@ -147,7 +147,7 @@ export function Health() {
                                     size="icon"
                                     className="absolute top-3 right-3 bg-white/80 hover:bg-white rounded-full h-8 w-8"
                                     onClick={() => toggleSaveArticle(tip.id)}
-                                    aria-label={savedArticles.includes(tip.id) ? "Bỏ lưu bài viết" : "Lưu bài viết"}
+                                    aria-label={savedArticles.includes(tip.id) ? "Unsave article" : "Save article"}
                                 >
                                     <Bookmark
                                         className={`h-4 w-4 ${
@@ -173,9 +173,9 @@ export function Health() {
                                             variant="ghost"
                                             size="sm"
                                             className={`p-0 h-auto text-blue-600 hover:text-blue-700 bg-gradient-to-r ${tip.gradient} bg-clip-text text-transparent group-hover:underline text-xs sm:text-sm`}
-                                            aria-label={`Đọc thêm về ${tip.title}`}
+                                            aria-label={`Read more about ${tip.title}`}
                                         >
-                                            Đọc Thêm
+                                            Read More
                                             <ArrowRight className="ml-1 h-3 w-3 group-hover:translate-x-1 transition-transform" />
                                         </Button>
                                     </Link>

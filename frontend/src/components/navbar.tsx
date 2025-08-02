@@ -135,7 +135,7 @@ export function Navbar() {
             <div className="h-12 w-12 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-xl flex items-center justify-center overflow-hidden transition-transform duration-300 group-hover:scale-105">
               <img
                 src={logo}
-                alt="Long Châu Logo"
+                alt="Long Chau Logo"
                 className="h-full w-full object-cover"
               />
             </div>
