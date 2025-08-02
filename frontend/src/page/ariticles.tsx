@@ -20,7 +20,7 @@ export function ArticlePage() {
         const saved = localStorage.getItem("savedArticles");
         return saved ? JSON.parse(saved) : [];
     });
-    const [cartCount, setCartCount] = useState(() => {
+    const [cartCount] = useState(() => {
         const savedCart = localStorage.getItem("cartItems");
         if (savedCart) {
             const items = JSON.parse(savedCart);

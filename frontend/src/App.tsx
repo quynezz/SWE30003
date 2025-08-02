@@ -26,13 +26,12 @@ function App() {
         <Route path="/checkout" element={<CheckoutPage />} />
         <Route path="/prescription" element={<UploadPrescriptionPage />} />
         <Route path="/branches" element={<StoreLocationPage />} />
-        <Route path="/product/:id" element={<ProductDetailPage />} />
-        <Route path="/product/:id" element={<ProductDetailPage />} />
+        <Route path="/product/:id" element={< ProductDetailPage />} />
         <Route path="/track" element={<Track/>} />
-        <Route path="/cart" element={<CartPage/>} />
-        <Route path="/order-success" element={<OrderSuccessPage/>} />
-        <Route path="/notification" element={<NotificationPage />} />
-        <Route path="/articles/:articleId" element={<ArticlePage />} />
+        <Route path="/cart" element={< CartPage />} />
+        <Route path="/order-success" element={< OrderSuccessPage />} />
+        <Route path="/notification" element={< NotificationPage />} />
+        <Route path="/articles/:articleId" element={< ArticlePage />} />
 
         {/* Uncomment the following lines if you have staff or admin dashboards */}
 
