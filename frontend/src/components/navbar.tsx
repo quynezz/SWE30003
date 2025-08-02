@@ -140,7 +140,7 @@ export function Navbar() {
               />
             </div>
             <span className="font-bold text-xl bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent group-hover:scale-105 transition-transform duration-300">
-              Long Châu
+              Long Chau
             </span>
           </Link>
         </div>
