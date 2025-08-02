@@ -1,5 +1,6 @@
 import { MapPin, Users, Pill, Clock, TrendingUp, Award, Shield, Zap } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 
 export function Stats() {
     const [isVisible, setIsVisible] = useState(false);
@@ -211,17 +212,18 @@ export function Stats() {
         </div>
 
         {/* Bottom CTA */}
+        <Link to="/" className="block mt-12 text-center">
         <div className={`text-center mt-12 ${isVisible ? 'animate-fadeInUp' : 'opacity-0 translate-y-10'}`} style={{ animationDelay: '600ms' }}>
         <div
         className={`inline-flex items-center space-x-4 bg-gradient-to-r from-blue-600 to-cyan-600 text-white px-8 py-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer group ${isVisible ? 'animate-pulse' : ''}`}
-        onClick={() => window.location.href = '/join'}
+        onClick={() => window.location.href = '/'}
         >
         <span className="font-semibold">Join Our Growing Community</span>
         <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
         </div>
         </div>
+        </Link>
         </div>
-
         <style>{`
             @keyframes fadeInUp {
                 from {
