@@ -163,9 +163,8 @@ For questions, suggestions, or feedback, reach out via:
 
 - **GitHub Issues**: Create an issue
 - **Email**: your-email@example.com
-
-Follow us on X for updates!
+- **Mail**: laungocquyen098@gmail.com
 
 ---
 
-*Built by *Lau Ngoc Quyen*, *Nguyen Thuan Khang*, *Le Ba Tung* ❤️ .*
+*Built by *Lau Ngoc Quyen*, *Nguyen Thuan Khang*, *Le Ba Tung*, and *Le tu tam tong* ❤️ .*
